@@ -25,7 +25,7 @@ const PROJECTS_DATA = [
     title: "CV Website Repository",
     description: "Link to this website's repository",
     image: "/images/projects/cv-website.png",
-    link: "https://github.com/BernaValdivieso/cv-website",
+    link: "https://github.com/BernaValdivieso/bernardo-website",
     tag: ["All", "Repository"],
   },
 ];
