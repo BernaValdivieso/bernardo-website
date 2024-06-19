@@ -1,5 +1,5 @@
 "use client";
-import { createPaymentGateway } from "@/gateways/fintoc/create-payment.gateway";
+import { createPaymentIntentGateway } from "@/gateways/fintoc/create-payment-intent.gateway";
 import React from "react";
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ export const FintocSection = () => {
 
   const handleButtonClick = async () => {
     try {
-      const response = await createPaymentGateway();
+      const response = await createPaymentIntentGateway({ amount: 3300 });
       console.log("response: ", response);
       setResponse(response);
     } catch (error) {

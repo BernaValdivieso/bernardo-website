@@ -25,8 +25,11 @@ export default function Home() {
         <section id="create-product">
           <CreateProductForm />
         </section>
-        <section id="fintoc">
+        <section id="fintoc-widget">
           <FintocWidget />
+        </section>
+        <section id="fintoc-section">
+          <FintocSection />
         </section>
       </div>
     </main>
