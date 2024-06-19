@@ -1,7 +1,12 @@
+import { Product } from "@/domain/entities/product.entity";
 import { AboutSection } from "./components/about-section/about-section";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { Navbar } from "./components/nav-bar/nav-bar";
+import { ProductsTable } from "./components/products/products-table";
 import { ProjectsSection } from "./components/projects-section/projects-section";
+import CreateProductForm from "./components/products/create-product-form";
+import { FintocSection } from "./components/fintoc-section/fintoc-section";
+import FintocWidget from "./components/fintoc-section/fintoc-widget";
 
 export default function Home() {
   return (
@@ -14,6 +19,15 @@ export default function Home() {
         </section>
         <section id="projects">
           <ProjectsSection />
+        </section>
+        <section id="products">
+          <ProductsTable />
+        </section>
+        <section id="create-product">
+          <CreateProductForm />
+        </section>
+        <section id="fintoc">
+          <FintocWidget />
         </section>
       </div>
     </main>
