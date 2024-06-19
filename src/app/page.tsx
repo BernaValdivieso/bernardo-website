@@ -1,4 +1,3 @@
-import { Product } from "@/domain/entities/product.entity";
 import { AboutSection } from "./components/about-section/about-section";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { Navbar } from "./components/nav-bar/nav-bar";
