@@ -1,5 +1,6 @@
 import { AboutSection } from "./components/about-section/about-section";
-import { HeroSection } from "./components/hero-section";
+import { HeroSection } from "./components/hero-section/hero-section";
+import { ProjectsSection } from "./components/projects-section/project-section";
 
 export default function Home() {
   return (
@@ -8,6 +9,9 @@ export default function Home() {
         <HeroSection />
         <section id="about">
           <AboutSection />
+        </section>
+        <section id="projects">
+          <ProjectsSection />
         </section>
       </div>
     </main>
