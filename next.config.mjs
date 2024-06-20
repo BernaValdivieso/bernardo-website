@@ -13,7 +13,8 @@ const nextConfig = {
       },
       {
         source: "/fintoc/:path*",
-        destination: "https://api.fintoc.com/v1/:path*", // Proxy to Backend
+        destination:
+          "https://p0rtpx8s4d.execute-api.us-east-1.amazonaws.com/:path*", // Proxy to Backend
       },
     ];
   },
