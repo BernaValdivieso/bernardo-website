@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon } from "@heroicons/react/24/outline";
 
 export const ProjectCard = ({
   imgUrl,
@@ -31,14 +31,6 @@ export const ProjectCard = ({
             className="h-14 w-14 border-2 relative rounded-full border-[#ADB7BE] hover:border-white mr-4 group/link"
           >
             <EyeIcon className="h-10 w-10 text-[#ADB7BE] group-hover/link:text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-          </a>
-          <a
-            target="_blank"
-            href={link}
-            rel="noopener noreferrer"
-            className="h-14 w-14 border-2 relative rounded-full border-[#ADB7BE] hover:border-white group/link"
-          >
-            <CodeBracketIcon className="h-10 w-10 text-[#ADB7BE] group-hover/link:text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           </a>
         </div>
       </div>

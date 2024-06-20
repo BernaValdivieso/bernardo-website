@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { getFintoc } from "@fintoc/fintoc-js";
 
 type FintocWidgetProps = {
-  publicKey?: string; // Puedes hacerlos opcionales para tener valores por defecto
+  publicKey?: string;
   holderType?: "business" | "individual";
   product?: "movements" | "subscriptions" | "invoices" | "payments";
   widgetToken?: string;
@@ -13,7 +13,7 @@ type FintocWidgetProps = {
   onEvent?: () => void;
 };
 
-const FintocWidget: React.FC<FintocWidgetProps> = ({
+export const FintocWidget: React.FC<FintocWidgetProps> = ({
   publicKey = "pk_test_CiqqLN7nx916zq1KP9Y-kRBRvbwZzGEQ",
   holderType = "individual",
   product = "payments",
@@ -51,9 +51,7 @@ const FintocWidget: React.FC<FintocWidgetProps> = ({
       className="px-6 py-3 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:bg-slate-200 text-white"
       disabled={loading}
     >
-      {loading ? "Opening..." : "Open Fintoc Widget"}
+      {loading ? "Opening..." : "Make Payment"}
     </button>
   );
 };
-
-export default FintocWidget;

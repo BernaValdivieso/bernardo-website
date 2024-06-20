@@ -1,23 +1,29 @@
-// products-table.tsx
-
 "use client";
 
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Product } from "@/domain/entities/product.entity";
 import { getProductsGateway } from "@/gateways/products/get-products.gateway";
 import { deleteProductGateway } from "@/gateways/products/delete-product.gateway";
-import UpdateProductModal from "./update-product-modal"; // Importar el componente del modal de actualización
+import { UpdateProductModal } from "./update-product-modal";
+import { CreateProductModal } from "./create-product-modal"; // Import the new CreateProductModal
 import { updateProductGateway } from "@/gateways/products/update-product.gateway";
 
-export const ProductsTable = () => {
+export const ProductsSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const itemsPerPage = 4;
   const [selectedProductForUpdate, setSelectedProductForUpdate] =
     useState<Product | null>(null);
-  const [showUpdateModal, setShowUpdateModal] = useState(false); // Estado para controlar la visibilidad del modal
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false); // State for showing the create modal
+
+  const itemsPerPage = 4;
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = products.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(products.length / itemsPerPage);
 
   const getProducts = async () => {
     setLoading(true);
@@ -37,9 +43,8 @@ export const ProductsTable = () => {
       for (const productId of selectedProducts) {
         await deleteProductGateway({ productId });
       }
-      // Refresh the products list after deletion
       await getProducts();
-      setSelectedProducts([]); // Clear selected products
+      setSelectedProducts([]);
     } catch (error) {
       console.error("Error deleting products:", error);
     } finally {
@@ -51,20 +56,12 @@ export const ProductsTable = () => {
     getProducts();
   }, []);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-
   const handleSelectProduct = (productId: string) => {
     setSelectedProducts((prevSelected) =>
       prevSelected.includes(productId)
         ? prevSelected.filter((id) => id !== productId)
         : [...prevSelected, productId]
     );
-
-    // Update selected product for update
     const productToUpdate = products.find(
       (product) => product.productId === productId
     );
@@ -75,8 +72,8 @@ export const ProductsTable = () => {
     setLoading(true);
     try {
       await updateProductGateway({ product: updatedProduct });
-      await getProducts(); // Recargar productos después de la actualización
-      setShowUpdateModal(false); // Cerrar el modal después de completar la actualización
+      await getProducts();
+      setShowUpdateModal(false);
     } catch (error) {
       console.error("Error updating product:", error);
     } finally {
@@ -90,11 +87,23 @@ export const ProductsTable = () => {
 
   const handleCloseModal = () => {
     setShowUpdateModal(false);
+    setShowCreateModal(false); // Close the create modal
+  };
+
+  const handleCreateButtonClick = () => {
+    setShowCreateModal(true);
   };
 
   return (
-    <div className="my-8">
-      <h2 className="text-3xl font-bold text-white mb-4">Products Table</h2>
+    <div className="my-8 mt-14">
+      <h2 className="text-center text-3xl font-bold text-white mb-4">
+        Products Demo
+      </h2>
+      <p className="text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl">
+        This section displays a table of products and the associated CRUD
+        actions. This is connected to a backend which can be reviewed in the
+        projects section above.
+      </p>
       <div className="flex flex-col sm:flex-row sm:space-x-4 mb-4">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 sm:mb-0"
@@ -121,11 +130,18 @@ export const ProductsTable = () => {
         >
           Update Product
         </button>
+        <button
+          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mb-2 sm:mb-0"
+          onClick={handleCreateButtonClick}
+          disabled={loading}
+        >
+          Create Product
+        </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="table-auto w-full mt-4">
+        <table className="table-auto w-full mt-4 bg-gray-800 text-white">
           <thead>
-            <tr className="bg-gray-800 text-white">
+            <tr>
               <th className="px-2 sm:px-4 py-2">Select</th>
               <th className="px-2 sm:px-4 py-2">Product ID</th>
               <th className="px-2 sm:px-4 py-2">Name</th>
@@ -136,18 +152,18 @@ export const ProductsTable = () => {
           </thead>
           <tbody>
             {currentProducts.length === 0 &&
-              Array.from({ length: 4 }).map((_, index) => (
-                <tr key={index} className="bg-gray-700 text-white">
-                  <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                  <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                  <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                  <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                  <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                  <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
+              Array.from({ length: itemsPerPage }).map((_, index) => (
+                <tr key={index}>
+                  <td className="border px-2 sm:px-4 py-2"> </td>
+                  <td className="border px-2 sm:px-4 py-2"> </td>
+                  <td className="border px-2 sm:px-4 py-2"> </td>
+                  <td className="border px-2 sm:px-4 py-2"> </td>
+                  <td className="border px-2 sm:px-4 py-2"> </td>
+                  <td className="border px-2 sm:px-4 py-2"> </td>
                 </tr>
               ))}
             {currentProducts.map((product) => (
-              <tr key={product.productId} className="bg-gray-700 text-white">
+              <tr key={product.productId}>
                 <td className="border px-2 sm:px-4 py-2">
                   <input
                     type="checkbox"
@@ -171,13 +187,13 @@ export const ProductsTable = () => {
             {currentProducts.length < itemsPerPage &&
               Array.from({ length: itemsPerPage - currentProducts.length }).map(
                 (_, index) => (
-                  <tr key={`empty-${index}`} className="bg-gray-700 text-white">
-                    <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                    <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                    <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                    <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                    <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
-                    <td className="border px-2 sm:px-4 py-2">&nbsp;</td>
+                  <tr key={`empty-${index}`}>
+                    <td className="border px-2 sm:px-4 py-2"> </td>
+                    <td className="border px-2 sm:px-4 py-2"> </td>
+                    <td className="border px-2 sm:px-4 py-2"> </td>
+                    <td className="border px-2 sm:px-4 py-2"> </td>
+                    <td className="border px-2 sm:px-4 py-2"> </td>
+                    <td className="border px-2 sm:px-4 py-2"> </td>
                   </tr>
                 )
               )}
@@ -212,16 +228,20 @@ export const ProductsTable = () => {
         </button>
       </div>
 
-      {/* Modal para actualizar producto */}
       {showUpdateModal && selectedProductForUpdate && (
         <UpdateProductModal
           product={selectedProductForUpdate}
-          updateProduct={updateProduct}
           onClose={handleCloseModal}
+          updateProduct={updateProduct}
+        />
+      )}
+
+      {showCreateModal && (
+        <CreateProductModal
+          onClose={handleCloseModal}
+          onCreate={getProducts} // Refresh the product list after creating a new product
         />
       )}
     </div>
   );
 };
-
-export default ProductsTable;

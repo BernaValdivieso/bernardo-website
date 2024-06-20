@@ -18,6 +18,14 @@ const NAV_LINKS = [
     title: "Projects",
     path: "#projects",
   },
+  {
+    title: "Products Demo",
+    path: "#products",
+  },
+  {
+    title: "Fintoc Demo",
+    path: "#fintoc",
+  },
 ];
 
 export const Navbar = () => {
@@ -33,7 +41,7 @@ export const Navbar = () => {
           href="/"
           className="text-2xl md:text-5xl text-white font-semibold"
         >
-          LOGO
+          Home
         </Link>
         <div className="block md:hidden">
           {isNavbarOpen ? (

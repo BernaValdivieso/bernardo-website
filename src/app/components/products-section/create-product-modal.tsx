@@ -1,24 +1,23 @@
-// update-product-modal.tsx
-
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { createProductGateway } from "@/gateways/products/create-product.gateway";
 import { Product } from "@/domain/entities/product.entity";
 
-interface UpdateProductModalProps {
-  product: Product;
-  updateProduct: (updatedProduct: Product) => void;
+interface CreateProductModalProps {
   onClose: () => void;
+  onCreate: () => void;
 }
 
-const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
-  product,
-  updateProduct,
+export const CreateProductModal: React.FC<CreateProductModalProps> = ({
   onClose,
+  onCreate,
 }) => {
-  const [formData, setFormData] = useState<Product>({
-    ...product,
+  const [formData, setFormData] = useState<Omit<Product, "productId">>({
+    name: "",
+    description: "",
+    price: 0,
+    isAvailable: false,
   });
-
-  const [loading, setLoading] = useState(false); // Estado para controlar el estado de carga del botón de actualización
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -26,20 +25,26 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: name === "isAvailable" ? value === "true" : value,
+      [name]:
+        name === "isAvailable"
+          ? value === "true"
+          : name === "price"
+          ? parseFloat(value)
+          : value,
     }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Activar el estado de carga al enviar el formulario
+    setLoading(true);
     try {
-      await updateProduct(formData);
-      onClose(); // Cerrar el modal después de completar la actualización
+      await createProductGateway({ product: formData });
+      onCreate();
+      onClose();
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Error creating product:", error);
     } finally {
-      setLoading(false); // Desactivar el estado de carga después de completar la actualización (éxito o fallo)
+      setLoading(false);
     }
   };
 
@@ -47,7 +52,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-3xl font-bold text-white mb-4 text-center">
-          Update Product
+          Create Product
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block">
@@ -112,7 +117,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
               }`}
               disabled={loading}
             >
-              {loading ? "Updating..." : "Update"}
+              {loading ? "Creating..." : "Create"}
             </button>
           </div>
         </form>
@@ -120,5 +125,3 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({
     </div>
   );
 };
-
-export default UpdateProductModal;
