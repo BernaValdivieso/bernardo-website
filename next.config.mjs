@@ -5,16 +5,16 @@ const nextConfig = {
       {
         source: "/api/:path*",
         destination:
-          "https://hen8t7wcoc.execute-api.us-east-1.amazonaws.com/:path*", // Proxy to Backend
+          "https://hen8t7wcoc.execute-api.us-east-1.amazonaws.com/:path*",
       },
       {
         source: "/jokes/:path*",
-        destination: "https://api.chucknorris.io/jokes/:path*", // Proxy to Backend
+        destination: "https://api.chucknorris.io/jokes/:path*",
       },
       {
         source: "/fintoc/:path*",
         destination:
-          "https://p0rtpx8s4d.execute-api.us-east-1.amazonaws.com/:path*", // Proxy to Backend
+          "https://p0rtpx8s4d.execute-api.us-east-1.amazonaws.com/:path*",
       },
     ];
   },

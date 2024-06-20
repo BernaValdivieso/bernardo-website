@@ -28,6 +28,22 @@ const PROJECTS_DATA = [
     link: "https://github.com/BernaValdivieso/bernardo-website",
     tag: ["All", "Repository"],
   },
+  {
+    id: 4,
+    title: "Products Backend Repository",
+    description: "Link to the products backend repository",
+    image: "/images/projects/products-logo.jpg",
+    link: "https://github.com/BernaValdivieso/backend-test",
+    tag: ["All", "Repository"],
+  },
+  {
+    id: 5,
+    title: "Fintoc Integration Repository",
+    description: "Link to the Fintoc backend repository",
+    image: "/images/projects/fintoc-logo.avif",
+    link: "https://github.com/BernaValdivieso/fintoc-integration",
+    tag: ["All", "Repository"],
+  },
 ];
 
 export const ProjectsSection = () => {
@@ -44,7 +60,7 @@ export const ProjectsSection = () => {
   return (
     <>
       <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
-        My Projects
+        My Projects and web links
       </h2>
       <div className="flex flex-row justify-center items-center gap-2 text-white my-6">
         <ProjectTag

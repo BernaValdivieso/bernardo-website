@@ -56,7 +56,7 @@ export const AboutSection = () => {
     <section className="text-white">
       <div className="gap-8 items-center py-8 px-4 xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-16">
         <Image
-          src="/images/ai-generated-astronaut.webp"
+          src="/images/software-engineer.png"
           alt="about me image"
           width={500}
           height={500}

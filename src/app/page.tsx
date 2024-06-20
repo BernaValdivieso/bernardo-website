@@ -1,11 +1,9 @@
 import { AboutSection } from "./components/about-section/about-section";
 import { HeroSection } from "./components/hero-section/hero-section";
 import { Navbar } from "./components/nav-bar/nav-bar";
-import { ProductsTable } from "./components/products/products-table";
+import { ProductsSection } from "./components/products-section/products-section";
 import { ProjectsSection } from "./components/projects-section/projects-section";
-import CreateProductForm from "./components/products/create-product-form";
 import { FintocSection } from "./components/fintoc-section/fintoc-section";
-import FintocWidget from "./components/fintoc-section/fintoc-widget";
 
 export default function Home() {
   return (
@@ -20,12 +18,9 @@ export default function Home() {
           <ProjectsSection />
         </section>
         <section id="products">
-          <ProductsTable />
+          <ProductsSection />
         </section>
-        <section id="create-product">
-          <CreateProductForm />
-        </section>
-        <section id="fintoc-section">
+        <section id="fintoc">
           <FintocSection />
         </section>
       </div>
