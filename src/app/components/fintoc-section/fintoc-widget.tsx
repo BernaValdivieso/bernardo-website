@@ -17,7 +17,7 @@ const FintocWidget: React.FC<FintocWidgetProps> = ({
   publicKey = "pk_test_CiqqLN7nx916zq1KP9Y-kRBRvbwZzGEQ",
   holderType = "individual",
   product = "payments",
-  widgetToken = "pi_NoY1VZSZnopL14xB_sec_9Q6nyiLzWKb6SMQvrWip3Nzh",
+  widgetToken,
   onSuccess,
   onExit,
   onEvent,
